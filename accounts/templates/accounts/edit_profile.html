@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}{{request.user.profile.full_name}}'s Settings{% endblock title %}
+{% block body %}
+
+<!-- Page Body Start-->
+<div class="page-body-wrapper">
+  <!-- Page Sidebar Start-->
+
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>Edit Profile</h3>
+          </div>
+          <div class="col-12 col-sm-6">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
+              <li class="breadcrumb-item">User</li>
+              <li class="breadcrumb-item active"> User Edit</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+      <div class="edit-profile">
+        <div class="row">
+
+
+          {% comment %} <div class="col-xl-4">
+            <div class="card">
+              <div class="card-header pb-0">
+                <h4 class="card-title mb-0">My Profile</h4>
+                <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+              </div>
+              <div class="card-body">
+                <form>
+                  <div class="row mb-2">
+                    <div class="profile-title">
+                      <div class="media">                        <img class="img-70 rounded-circle" alt="" src="../assets/images/user/7.jpg">
+                        <div class="media-body">
+                          <h3 class="mb-1 f-20 txt-primary">MARK JECNO</h3>
+                          <p class="f-12">DESIGNER</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <h6 class="form-label">Bio</h6>
+                    <textarea class="form-control" rows="5">On the other hand, we denounce with righteous indignation</textarea>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Email-Address</label>
+                    <input class="form-control" placeholder="your-email@domain.com">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input class="form-control" type="password" value="password">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Website</label>
+                    <input class="form-control" placeholder="http://Uplor .com">
+                  </div>
+                  <div class="form-footer">
+                    <button class="btn btn-primary btn-block">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div> {% endcomment %}
+
+
+          <div class="col-xl-8">
+            <form class="card" method="post" enctype='multipart/form-data'>
+              {% csrf_token %}
+              
+              <div class="card-header pb-0">
+                <h4 class="card-title mb-0">Edit Profile</h4>
+                <div class="card-options"><a class="card-options-collapse" href="#" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="#" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a></div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+
+
+                  <div class="col-md-12">
+                    <div class="mb-3">
+                      {% if worker_profile_form %}
+                        {{worker_profile_form.as_p}}
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  
+                  
+                </div>
+              </div>
+              <div class="card-footer text-end">
+                <button class="btn btn-primary" type="submit">Update Profile</button>
+              </div>
+            </form>
+            <!-- Container-fluid Ends-->
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

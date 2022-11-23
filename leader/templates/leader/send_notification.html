@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}Send Notification To Workers{% endblock title %}
+{% block body %}
+<!-- Page Body Start-->
+<div class="page-body-wrapper default-menu default-menu">
+  <!-- Page Sidebar Start-->
+
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>
+               Notification to workers</h3>
+          </div>
+
+          <div class="col-12 col-sm-6">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
+              <li class="breadcrumb-item">Apps</li>
+              <li class="breadcrumb-item active">Notification                          </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <form method='POST' enctype='multipart/form-data'>
+                {% csrf_token %}
+
+                <div class="form theme-form projectcreate">
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label>Subject</label>
+                        {{notification_form.subject}}
+                      </div>
+                    </div>
+                  </div>
+
+                  
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="mb-3">
+                        <label>To Workers</label>
+                        {{notification_form.to_worker}}
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="mb-3">
+                        <label>Active Status</label>
+                        {{notification_form.is_active}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label>Messages</label>
+                        {{notification_form.message}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-end"><button type='submit' class="btn btn-secondary me-3">Send Notification</button><a class="btn btn-danger" href="{% url 'leader:leader_project' %}">Cancel</a></div>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid Ends-->
+  </div>
+</div>
+{% endblock body %}
+    

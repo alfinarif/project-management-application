@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Transaction Of: {{request.user.profile.full_name}}{% endblock title %}
+{% load project_data_entry %}
+
+{% block body %}
+
+<!-- Page Body Start-->
+<div class="page-body-wrapper">
+  <!-- Page Sidebar Start-->
+
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>Payment Transactions</h3>
+          </div>
+          <div class="col-12 col-sm-6">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'worker:worker_dashboard' %}">                                       <i data-feather="home"></i></a></li>
+              <li class="breadcrumb-item">payments</li>
+              <li class="breadcrumb-item active">my</li>
+              <li class="breadcrumb-item active">transaction</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="display" id="advance-1">
+                  <thead>
+                    <tr>
+                      <th>Project</th>
+                      <th>Salary</th>
+                      <th>Amount</th>
+                      <th>Per Entry</th>
+                      <th>Entry Amount</th>
+                      <th>Received</th>
+                      <th>Dates</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for payment in my_payments %}
+                      <tr>
+                        <td style="font-weight: bold;">{{payment.project.name}}</td>
+                        <td style="color:green;font-weight: bold;">{{payment.salary}}</td>
+                        <td style="color:green;font-weight: bold;">{{payment.amount}}</td>
+                        <td style="color:green;font-weight: bold;">{{payment.per_entry}}</td>
+                        <td style="color:green;font-weight: bold;">{{payment.entry_totals}}</td>
+                        <td>{{payment.is_received}}</td>
+                        <td>{{payment.date}}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <!-- Container-fluid Ends-->
+  </div>
+</div>
+
+{% endblock body %}
+    

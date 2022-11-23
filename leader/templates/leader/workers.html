@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block title %}Workers Accounts Data{% endblock title %}
+{% load project_by_user %}
+
+{% block body %}
+<!-- Page Body Start-->
+<div class="page-body-wrapper">
+  <!-- Page Sidebar Start-->
+
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>Workers List</h3>
+          </div>
+          <div class="col-md-6 p-0 text-end">
+            <div class="form-group mb-0 me-0"></div><button type="button" data-bs-toggle="modal" data-bs-target="#exampleModalgetbootstrap" data-whatever="@getbootstrap" class="btn btn-primary pb-1"> <i class="pt-2" data-feather="plus-square"> </i>Add New Worker</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h5>Workers</h5>
+          <span>Disabling features that you don't wish to use for a particular table is easily done by setting a variable in the initialisation object</span><span>In the following example only the search feature is left enabled (which it is by default).</span>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="display" id="basic-2">
+              <thead>
+                <tr>
+                  <th>Object id</th>
+                  <th>Full name</th>
+                  <th>Email</th>
+                  <th>Phone number</th>
+                  <th>Address</th>
+                  <th>Role</th>
+                  <th>Total Project Done</th>
+                  <th>View profile </th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              {% for worker in workers %}
+                <tr>
+                  <th>{{worker.profile.id}}</th>
+                  <td>{{worker.profile.full_name}}</td>
+                  <td>{{worker.email|truncatechars:15}}</td>
+                  <td>{{worker.profile.phone}}</td>
+                  <td>{{worker.profile.address|truncatechars:25}}</td>
+                  <td>{{worker.user_type}}</td>
+                  <td>{{worker | total_project}}</td>
+                  <td><a href="user-profile.html">Full Details </a></td>
+                </tr>
+              {% endfor %}
+                
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    
+    
+    </div>
+  </div>
+</div>
+
+
+
+
+{% comment %} worker creation modal form {% endcomment %}
+<div class="modal fade" id="exampleModalgetbootstrap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create New Worker</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="col-form-label" for="recipient-name">Email Address *</label>
+            <input name="email" class="form-control" type="email" required placeholder="Email">
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label" for="recipient-name">Password *</label>
+            <input name="password1" class="form-control" type="password" required placeholder="********">
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label" for="recipient-name">Confirm Password *</label>
+            <input name="password2" class="form-control" type="password" required placeholder="********">
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Add Worker</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+{% endblock body %}

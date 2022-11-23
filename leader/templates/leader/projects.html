@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% block title %}Projects List{% endblock title %}
+{% block body %}
+ <!-- Page Body Start-->
+ <div class="page-body-wrapper default-menu default-menu">
+  <!-- Page Sidebar Start-->
+  
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>
+               Project List</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+      <div class="row project-cards">
+        <div class="col-md-12 project-list">
+          <div class="card">
+            <div class="row">
+              <div class="col-md-6 p-0">
+                <ul class="nav nav-tabs border-tab" id="top-tab" role="tablist">
+                  <li class="nav-item"><a class="nav-link" id="profile-top-tab" data-bs-toggle="tab" href="#top-stuck" role="tab" aria-controls="top-stuck" aria-selected="false"><i data-feather="info"></i>Stuck</a></li>
+                  <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab" href="#top-working" role="tab" aria-controls="top-working" aria-selected="false"><i data-feather="check-circle"></i>Working</a></li>
+                  <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab" href="#top-done" role="tab" aria-controls="top-done" aria-selected="false"><i data-feather="check-circle"></i>Done</a></li>
+                </ul>
+              </div>
+              <div class="col-md-6 p-0">                    
+                <div class="form-group mb-0 me-0"></div><a class="btn btn-primary" href="{% url 'leader:leader_project_add' %}"> <i data-feather="plus-square"> </i>Create New Project</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="tab-content" id="top-tabContent">
+
+              
+                <div class="tab-pane fade show active" id="top-stuck" role="tabpanel" aria-labelledby="top-home-tab">
+                  <div class="row">
+
+                    {% for project in projects %}
+                      {% if project.status == 'stuck' %}
+                        <div class="col-xxl-4 box-col-6 col-lg-6">
+                          <div class="project-box"><span class="badge badge-primary">{{project.status}}</span>
+                            <a href="{% url 'leader:leader_project_detail' pk=project.id %}"><h6>{{project.name}}</h6></a>
+                            <div class="media"><img class="img-20 me-2 rounded-circle" src="../assets/images/user/3.jpg" alt="" data-original-title="" title="">
+                              <div class="media-body">
+                                <p>{{project.category}}</p>
+                              </div>
+                            </div>
+                            <p>{{project.sort_description|truncatechars:50}}</p>
+                            <div class="row details">
+                              <div class="col-6"><span>Issues </span></div>
+                              <div class="col-6 font-primary">{{project.issues.count}} </div>
+                              <div class="col-6"> <span>Tasks</span></div>
+                              <div class="col-6 font-primary">{{project.tasks.count}}</div>
+                            </div>
+                            <div class="customers">
+                              <ul>
+                                {% for worker in project.worker.all %}
+                                  {% if worker.employe_image %}
+                                    <li class="d-inline-block"><img class="img-30 rounded-circle" src="{{worker.profile.employe_image.url}}" alt="" data-original-title="" title=""></li>
+                                  {% else %}
+                                  <li class="d-inline-block"><img class="img-30 rounded-circle" src="https://acce.edu.au/wp-content/uploads/2018/09/placeholder-profile-sq.jpg" alt="" data-original-title="" title=""></li>
+                                  {% endif %}
+                                  {% endfor %}
+                                <li class="d-inline-block ms-2">
+                                  <p class="f-12">+{{project.worker.count}} More</p>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="project-status mt-4">
+                              <div class="media mb-0">
+                                <p>{{project.complete_per}}% </p>
+                                <div class="media-body text-end"><span>Done</span></div>
+                              </div>
+                              <div class="progress" style="height: 5px">
+                                <div class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{project.complete_per}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="top-working" role="tabpanel" aria-labelledby="top-home-tab">
+                  <div class="row">
+
+                    {% for project in projects %}
+                      {% if project.status == 'working' %}
+                        <div class="col-xxl-4 box-col-6 col-lg-6">
+                          <div class="project-box"><span class="badge badge-primary">{{project.status}}</span>
+                            <a href="{% url 'leader:leader_project_detail' pk=project.id %}"><h6>{{project.name}}</h6></a>
+                            <div class="media"><img class="img-20 me-2 rounded-circle" src="../assets/images/user/3.jpg" alt="" data-original-title="" title="">
+                              <div class="media-body">
+                                <p>{{project.category}}</p>
+                              </div>
+                            </div>
+                            <p>{{project.sort_description|truncatechars:50}}</p>
+                            <div class="row details">
+                              <div class="col-6"><span>Issues </span></div>
+                              <div class="col-6 font-primary">{{project.issues.count}} </div>
+                              <div class="col-6"> <span>Tasks</span></div>
+                              <div class="col-6 font-primary">{{project.tasks.count}}</div>
+                            </div>
+                            <div class="customers">
+                              <ul>
+                                {% for worker in project.worker.all %}
+                                  {% if worker.employe_image %}
+                                    <li class="d-inline-block"><img class="img-30 rounded-circle" src="{{worker.profile.employe_image.url}}" alt="" data-original-title="" title=""></li>
+                                  {% else %}
+                                  <li class="d-inline-block"><img class="img-30 rounded-circle" src="https://acce.edu.au/wp-content/uploads/2018/09/placeholder-profile-sq.jpg" alt="" data-original-title="" title=""></li>
+                                  {% endif %}
+                                  {% endfor %}
+                                <li class="d-inline-block ms-2">
+                                  <p class="f-12">+{{project.worker.count}} More</p>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="project-status mt-4">
+                              <div class="media mb-0">
+                                <p>{{project.complete_per}}% </p>
+                                <div class="media-body text-end"><span>Done</span></div>
+                              </div>
+                              <div class="progress" style="height: 5px">
+                                <div class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{project.complete_per}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="top-done" role="tabpanel" aria-labelledby="top-home-tab">
+                  <div class="row">
+
+                    {% for project in projects %}
+                      {% if project.status == 'done' %}
+                        <div class="col-xxl-4 box-col-6 col-lg-6">
+                          <div class="project-box"><span class="badge badge-primary">{{project.status}}</span>
+                            <a href="{% url 'leader:leader_project_detail' pk=project.id %}"><h6>{{project.name}}</h6></a>
+                            <div class="media"><img class="img-20 me-2 rounded-circle" src="../assets/images/user/3.jpg" alt="" data-original-title="" title="">
+                              <div class="media-body">
+                                <p>{{project.category}}</p>
+                              </div>
+                            </div>
+                            <p>{{project.sort_description|truncatechars:50}}</p>
+                            <div class="row details">
+                              <div class="col-6"><span>Issues </span></div>
+                              <div class="col-6 font-primary">{{project.issues.count}} </div>
+                              <div class="col-6"> <span>Tasks</span></div>
+                              <div class="col-6 font-primary">{{project.tasks.count}}</div>
+                            </div>
+                            <div class="customers">
+                              <ul>
+                                {% for worker in project.worker.all %}
+                                  {% if worker.employe_image %}
+                                    <li class="d-inline-block"><img class="img-30 rounded-circle" src="{{worker.profile.employe_image.url}}" alt="" data-original-title="" title=""></li>
+                                  {% else %}
+                                  <li class="d-inline-block"><img class="img-30 rounded-circle" src="https://acce.edu.au/wp-content/uploads/2018/09/placeholder-profile-sq.jpg" alt="" data-original-title="" title=""></li>
+                                  {% endif %}
+                                  {% endfor %}
+                                <li class="d-inline-block ms-2">
+                                  <p class="f-12">+{{project.worker.count}} More</p>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="project-status mt-4">
+                              <div class="media mb-0">
+                                <p>{{project.complete_per}}% </p>
+                                <div class="media-body text-end"><span>Done</span></div>
+                              </div>
+                              <div class="progress" style="height: 5px">
+                                <div class="progress-bar-animated bg-primary progress-bar-striped" role="progressbar" style="width: {{project.complete_per}}%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+
+                  </div>
+                </div>
+                
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid Ends-->
+  </div>
+</div>
+{% endblock body %}
+ 
+

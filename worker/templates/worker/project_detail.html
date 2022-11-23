@@ -1,0 +1,400 @@
+{% extends 'base.html' %}
+{% block title %}{{project.name}}{% endblock title %}
+{% block body %}
+<!-- Page Body Start-->
+<div class="page-body-wrapper default-menu default-menu">
+    {% include 'sidebar.html' %}
+    <div class="page-body">
+       <div class="container-fluid">
+          <div class="page-title">
+             <div class="row">
+                <div class="col-12 col-sm-6">
+                   <h3>
+                      {{project.name}} <span style="color:orange">Details</span>
+                   </h3>
+                </div>
+                <div class="col-12 col-sm-6">
+                   <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                         <a href="{% url 'worker:worker_dashboard' %}" data-bs-original-title="" title="">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
+                               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                               <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                         </a>
+                      </li>
+                      <li class="breadcrumb-item"> project</li>
+                      <li class="breadcrumb-item active"> {{project.name}}</li>
+                   </ol>
+                </div>
+             </div>
+          </div>
+       </div>
+       <!-- Container-fluid starts-->
+       <div class="container-fluid jkanban-container">
+          <div class="row">
+
+             <div class="col-12">
+                <div class="card">
+                  <h3 class="p-3">
+                     <span style="color:orange">Tasks Board</span>
+                  </h3>
+
+                  {% if project.status == 'draft' and project.accept_status == 'draft' %}
+                     <div class="card-header pb-0">
+                        <div class="form-group mb-0 me-0"></div>
+                        <a href="{% url 'worker:worker_project_accept' pk=project.pk %}" class="btn btn-primary"><i data-feather="check"></i>Accept Project</a>
+                     </div>
+                  {% elif project.status == 'stuck' or project.status == 'working'%}
+                     <div class="card-header pb-0">
+                        <div class="form-group mb-0 me-0"></div>
+                        <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#submitIssues" data-whatever="@getbootstrap"><i data-feather="check"></i>Issues Project</a>
+                        <a class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#submitProject" data-whatever="@getbootstrap"><i data-feather="check"></i>Submit Project</a>
+                     </div>
+                     
+                   {% endif %}
+                   <div class="card-body pb-0">
+                      <div class="kanban-block">
+                         <div id="demo1">
+                            <div class="kanban-container" style="width: 1290px;">
+
+                                 
+                               <div data-id="_todo" data-order="1" class="kanban-board" style="width: 400px; margin-left: 15px; margin-right: 15px;">
+                                  <header class="kanban-board-header">
+                                     <div class="kanban-title-board">Stuck</div>
+                                  </header>
+                                  <main class="kanban-drag">
+                                    {% for task in tasks %}
+                                       {% if task.status == 'stuck' %}
+                                          <div class="kanban-item">
+                                             <a class="kanban-box" href="#" data-bs-original-title="" title="" data-bs-toggle="modal" data-bs-target="#exampleModalgetbootstrap" data-whatever="@getbootstrap">
+                                                <span class="date">{{task.deadline}}</span><span class="badge badge-primary f-right">{{task.due}}</span>
+                                                <h6>{{task.name|title}}</h6>
+                                                <div class="media">
+                                                   <div class="media-body">
+                                                      {{description.html|safe|truncatechars:10}}
+                                                   </div>
+                                                </div>
+                                                <div class="d-flex mt-3">
+                                                   <div class="customers">
+                                                      <ul>
+                                                         <li class="d-inline-block me-3">
+                                                            <p class="f-12">+{{task.worker.count}}</p>
+                                                         </li>
+                                                      {% for worker in task.worker.all %}
+                                                         <li class="d-inline-block"><img class="img-20 rounded-circle" src="{{worker.profile.employe_image.url}}" alt="" data-original-title="" title=""></li>
+                                                      {% endfor %} 
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                             </a>
+                                          </div>
+
+                                          <div class="modal fade" id="exampleModalgetbootstrap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                             <div class="modal-dialog" role="document">
+                                               <div class="modal-content">
+                                                 <div class="modal-header">
+                                                   <h5 class="modal-title">{{task.name|title}}</h5>
+                                                   <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                 </div>
+                                                 <div class="modal-body">
+                                                   <div class="mb-3">
+                                                      <span>Project: </span> {{task.project.name}}
+                                                    </div>
+                                                     <div class="mb-3">
+                                                       <span>Status: </span> {{task.status}}
+                                                     </div>
+                                                     <div class="mb-3">
+                                                      <span>Due: </span> {{task.due}}
+                                                    </div>
+                                                    <div class="mb-3" style="width: 464px">
+                                                      {{task.description.html|safe}}
+                                                    </div>
+                                                     
+                                                 </div>
+                                                 <div class="modal-footer">
+                                                   <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                                                 </div>
+                                               </div>
+                                             </div>
+                                           </div>
+
+                                       {% endif %}
+                                    {% endfor %}
+                                  </main>
+                               </div>
+
+
+                               <div data-id="_doing" data-order="2" class="kanban-board" style="width: 400px; margin-left: 15px; margin-right: 15px;">
+                                  <header class="kanban-board-header">
+                                     <div class="kanban-title-board">Working</div>
+                                  </header>
+                                  <main class="kanban-drag">
+
+                                    {% for task in tasks %}
+                                       {% if task.status == 'working' %}
+                                          <div class="kanban-item">
+                                             <a class="kanban-box" href="#" data-bs-original-title="" title="" data-bs-toggle="modal" data-bs-target="#exampleModalgetbootstrap" data-whatever="@getbootstrap">
+                                                <span class="date">{{task.deadline}}</span><span class="badge badge-primary f-right">{{task.due}}</span>
+                                                <h6>{{task.name}}</h6>
+                                                <div class="media">
+                                                   <div class="media-body">
+                                                      {{description.html|safe}}
+                                                   </div>
+                                                </div>
+                                                <div class="d-flex mt-3">
+                                                   <div class="customers">
+                                                      <ul>
+                                                         <li class="d-inline-block me-3">
+                                                            <p class="f-12">+{{task.worker.count}}</p>
+                                                         </li>
+                                                      {% for worker in task.worker.all %}
+                                                         <li class="d-inline-block"><img class="img-20 rounded-circle" src="{{worker.profile.employe_image.url}}" alt="" data-original-title="" title=""></li>
+                                                      {% endfor %} 
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                             </a>
+                                          </div>
+
+                                          <div class="modal fade" id="exampleModalgetbootstrap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                             <div class="modal-dialog" role="document">
+                                               <div class="modal-content">
+                                                 <div class="modal-header">
+                                                   <h5 class="modal-title">{{task.name|title}}</h5>
+                                                   <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                 </div>
+                                                 <div class="modal-body">
+                                                    <div class="mb-3">
+                                                      <span>Project: </span> {{task.project.name}}
+                                                    </div>
+                                                     <div class="mb-3">
+                                                       <span>Status: </span> {{task.status}}
+                                                     </div>
+                                                     <div class="mb-3">
+                                                      <span>Due: </span> {{task.due}}
+                                                    </div>
+                                                    <div class="mb-3 task_des">
+                                                      {{task.description.html|safe}}
+                                                    </div>
+                                                     
+                                                 </div>
+                                                 <div class="modal-footer">
+                                                   <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                                                 </div>
+                                               </div>
+                                             </div>
+                                           </div>
+
+                                       {% endif %}
+                                    {% endfor %}
+                                  </main>
+                               </div>
+
+
+                               <div data-id="_done" data-order="3" class="kanban-board" style="width: 400px; margin-left: 15px; margin-right: 15px;">
+                                  <header class="kanban-board-header">
+                                     <div class="kanban-title-board">Done</div>
+                                  </header>
+                                  <main class="kanban-drag">
+
+                                    {% for task in tasks %}
+                                       {% if task.status == 'done' %}
+                                          <div class="kanban-item">
+                                             <a class="kanban-box" href="#" data-bs-original-title="" title="" data-bs-toggle="modal" data-bs-target="#exampleModalgetbootstrap" data-whatever="@getbootstrap">
+                                                <span class="date">{{task.deadline}}</span><span class="badge badge-primary f-right">{{task.due}}</span>
+                                                <h6>{{task.name}}</h6>
+                                                <div class="media">
+                                                   <div class="media-body">
+                                                      {{description.html|safe}}
+                                                   </div>
+                                                </div>
+                                                <div class="d-flex mt-3">
+                                                   <div class="customers">
+                                                      <ul>
+                                                         <li class="d-inline-block me-3">
+                                                            <p class="f-12">+{{task.worker.count}}</p>
+                                                         </li>
+                                                      {% for worker in task.worker.all %}
+                                                         <li class="d-inline-block"><img class="img-20 rounded-circle" src="{{worker.profile.employe_image.url}}" alt="" data-original-title="" title=""></li>
+                                                      {% endfor %} 
+                                                      </ul>
+                                                   </div>
+                                                </div>
+                                             </a>
+                                          </div>
+
+                                          <div class="modal fade" id="exampleModalgetbootstrap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                             <div class="modal-dialog" role="document">
+                                               <div class="modal-content">
+                                                 <div class="modal-header">
+                                                   <h5 class="modal-title">{{task.name|title}}</h5>
+                                                   <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                 </div>
+                                                 <div class="modal-body">
+                                                   <div class="mb-3">
+                                                      <span>Project: </span> {{task.project.name}}
+                                                    </div>
+                                                     <div class="mb-3">
+                                                       <span>Status: </span> {{task.status}}
+                                                     </div>
+                                                     <div class="mb-3">
+                                                      <span>Due: </span> {{task.due}}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                      {{task.description.html|safe}}
+                                                    </div>
+                                                     
+                                                 </div>
+                                                 <div class="modal-footer">
+                                                   <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                                                 </div>
+                                               </div>
+                                             </div>
+                                           </div>
+
+                                       {% endif %}
+                                    {% endfor %}
+                                  </main>
+                               </div>
+
+
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </div>
+
+             <div class="col-sm-12">
+               <div class="card">
+                 <div class="card-body">
+                   <div class="table-responsive">
+                     <table class="display" id="advance-2">
+                       <thead>
+                         <tr>
+                           <th>Category</th>
+                           <th>Leader</th>
+                           <th>Status</th>
+                           <th>Start Work</th>
+                           <th>End Work</th>
+                           <th>Budget</th>
+                           <th>complete %</th>
+                         </tr>
+                       </thead>
+                       <tbody>
+
+                           <tr>
+                             <td>{{project.category}}</td>
+                             <td>{{project.leader}}</td>
+                             <td>{{project.status}}</td>
+                             <td>{{project.work_start_date}}</td>
+                             <td>{{project.work_end_date}}</td>
+                             <td>{{project.project_client_budget}}</td>
+                             <td>{{project.complete_per}}</td>
+                           </tr>
+
+                       </tbody>
+                     </table>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+          </div>
+       </div>
+       <!-- Container-fluid Ends-->
+    </div>
+ </div>
+
+ <div class="modal fade" id="submitProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title">Submit <span style="color:orange">{{project.name}}</span></h5>
+         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <form method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            
+           <div class="mb-3">
+             <input name="project_id" type="hidden" value="{{project.id}}"/>
+           </div>
+           <div class="mb-3">
+             <label class="col-form-label" for="message-text">Description</label>
+             {{form.description}}
+           </div>
+           <div class="mb-3">
+            {{form.file}}
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Submit Project</button>
+          </div>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <div class="modal fade" id="submitIssues" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title">Issues On <span style="color:orange">{{project.name}}</span></h5>
+         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+         <form method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            
+            
+
+           <div class="mb-3">
+             <label class="col-form-label" for="recipient-name">Status</label>
+             <input name="project_id" type="hidden" value="{{project.id}}"/>
+             {{issues_form.status}}
+           </div>
+           <div class="mb-3">
+             <label class="col-form-label" for="message-text">Due</label>
+             {{issues_form.due}}
+           </div>
+
+           <div class="mb-3">
+            <label class="col-form-label" for="message-text">Start Work Time</label>
+            {{issues_form.today_start_work}}
+           </div>
+
+            <div class="mb-3">
+               <label class="col-form-label" for="message-text">End Work Time</label>
+               {{issues_form.today_end_work}}
+            </div>
+
+            <div class="mb-3">
+               <label class="col-form-label" for="message-text">Total Data Entry</label>
+               {{issues_form.total_data_entry_today}}
+            </div>
+
+            <div class="mb-3">
+               <label class="col-form-label" for="message-text">Compete %</label>
+               {{issues_form.complete_per}}
+            </div>
+
+            <div class="mb-3">
+               {{issues_form.file}}
+            </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Submit Issues</button>
+          </div>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+
+{% endblock body %}
+    

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Submited Projects Data{% endblock title %}
+{% load project_data_entry %}
+
+{% block body %}
+
+<!-- Page Body Start-->
+<div class="page-body-wrapper">
+  <!-- Page Sidebar Start-->
+
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>Submited Projects</h3>
+          </div>
+          <div class="col-12 col-sm-6">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
+              <li class="breadcrumb-item">project</li>
+              <li class="breadcrumb-item active">submited</li>
+              <li class="breadcrumb-item active">list</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="display" id="advance-1">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Submit By</th>
+                      <th>Status</th>
+                      <th>Data Entry</th>
+                      <th>Start Work</th>
+                      <th>End Work</th>
+                      <th>Budget</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for project in submited_projects %}
+                      <tr>
+                        <td>{{project.project.name}}</td>
+                        <td>{{project.user}}</td>
+                        <td>{{project.project.status}}</td>
+                        <td>{{project.project | total_data_entry}}</td>
+                        <td>{{project.project.work_start_date}}</td>
+                        <td>{{project.project.work_end_date}}</td>
+                        <td>{{project.project.project_client_budget}}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <!-- Container-fluid Ends-->
+  </div>
+</div>
+
+{% endblock body %}
+    

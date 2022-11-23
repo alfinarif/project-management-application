@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block title %}Tasks and Issues Board{% endblock title %}
+{% block body %}
+
+<!-- Page Body Start-->
+<div class="page-body-wrapper">
+  <!-- Page Sidebar Start-->
+  
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>Tasks</h3>
+          </div>
+          <div class="col-12 col-sm-6">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
+              <li class="breadcrumb-item">Apps</li>
+              <li class="breadcrumb-item active">Task</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+      <div class="email-wrap bookmark-wrap">
+        <div class="row">
+          <div class="col-xl-3 box-col-3 xl-30">
+            <div class="email-sidebar"><a class="btn btn-primary email-aside-toggle" href="javascript:void(0)">bookmark filter</a>
+              <div class="email-left-aside">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="email-app-sidebar left-bookmark">
+                      <div class="media">
+                        <div class="media-size-email"><img class="me-3 rounded-circle" src="/static/assets/images/user/user.png" alt=""></div>
+                        <div class="media-body">
+                          <h6 class="f-w-600">MARK JENCO</h6>
+                          <p>Markjecno@gmail.com</p>
+                        </div>
+                      </div>
+                      <ul class="nav main-menu custom-scrollbar" role="tablist">
+                        <li class="nav-item">
+                          <button class="btn-primary badge-light btn-block btn-mail w-100" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="me-2" data-feather="check-circle"></i>New Task</button>
+                          <div class="modal fade modal-bookmark" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+                                  <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">                                                 </button>
+                                </div>
+                                <div class="modal-body">
+                                  <form method="post" enctype='multipart/form-data' class="form-bookmark needs-validation" id="bookmark-form" novalidate="">
+                                    {% csrf_token %}
+
+                                    <div class="form-row">
+                                      <div class="form-group col-md-12 m-b-20">
+                                        <label for="task-title">Task Title</label>
+                                        {{task_form.name}}
+                                      </div>
+                                      <div class="form-group col-md-12 m-b-20">
+                                        <label for="sub-task">Project</label>
+                                        {{task_form.project}}
+                                      </div>
+                                      <div class="form-group col-md-12 m-b-20">
+                                        <label for="sub-task">Workers</label>
+                                        {{task_form.worker}}
+                                      </div>
+
+                                      <div class="form-group col-md-12 m-b-20">
+                                        <div class="d-flex date-details">
+
+                                          <div class="d-inline-block">
+                                            <label class="d-block mb-0">
+                                              {{task_form.status}}
+                                            </label>
+                                          </div>
+                                          <div class="d-inline-block">
+                                            <label class="d-block mb-0">
+                                              {{task_form.due}}
+                                            </label>
+                                          </div>
+                                          <div class="d-inline-block">
+                                            <label class="d-block mb-0">
+                                              {{task_form.deadline}}
+                                            </label>
+                                          </div>
+                                          <div class="d-inline-block">
+                                            <label class="d-block mb-0">
+                                              {{task_form.is_active}}Is Active
+                                            </label>
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                      <div class="form-group col-md-12 m-b-20">
+                                        <label for="task-title">Complete %</label>
+                                        {{task_form.complete_per}}
+                                      </div>
+                                      <div class="form-group col-md-12 m-b-20">
+                                        {{task_form.description}}
+                                      </div>
+                                      <div class="form-group col-md-12 m-b-20">
+                                        {{task_form.file}}
+                                      </div>
+
+                                    </div>
+                                    <input id="index_var" type="hidden" value="6">
+                                    <button class="btn btn-secondary" id="Bookmark" type="submit">Add Task</button>
+                                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+
+                        <li class="nav-item"><span class="main-title"> Functions </span></li>
+                        <li><a id="pills-created-tab" data-bs-toggle="pill" href="#pills-created" role="tab" aria-controls="pills-created" aria-selected="true"><span class="title"> Tasks List </span></a></li>
+                        <li><a class="show" id="pills-assigned-tab" data-bs-toggle="pill" href="#pills-assigned" role="tab" aria-controls="pills-assigned" aria-selected="false"><span class="title">Task Issues</span></a></li>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-9 box-col-9 col-md-12 xl-70">
+            <div class="email-right-aside bookmark-tabcontent">
+              <div class="card email-body radius-left">
+                <div class="ps-0">
+                  <div class="tab-content">
+
+
+                    <div class="tab-pane fade active show" id="pills-created" role="tabpanel" aria-labelledby="pills-created-tab">
+                      <div class="card mb-0">
+                        <div class="card-header d-flex">
+                          <h5 class="mb-0">Task List</h5><a href="#"><i class="me-2" data-feather="printer"></i>Print</a>
+                        </div>
+                        <div class="card-body p-0">
+                          <div class="taskadd">
+                            <div class="table-responsive">
+                              <table class="table">
+                                {% for task in tasks %}
+                                  <tr>
+                                    <td>
+                                      <h6 class="task_title_0">{{task.name}}</h6>
+                                      <p class="project_name_0">{{task.project.name}}</p>
+                                    </td>
+                                    <td>
+                                      <p class="task_desc_0">{{task.description.html|safe|truncatechars:25}}</p>
+                                    </td>
+                                    
+                                    <td>
+                                      <a href="javascript:void(0)"><i data-feather="edit-3"></i></a>
+                                      
+                                      <a class="pl-2" href="javascript:void(0)"><i data-feather="trash-2"></i></a>
+                                    </td>
+                                    
+                                    
+                                  </tr>
+                                {% endfor %}
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="fade tab-pane" id="pills-assigned" role="tabpanel" aria-labelledby="pills-assigned-tab">
+                      <div class="card mb-0">
+                        <div class="card-header d-flex">
+                          <h6 class="mb-0">Task Issues</h6><a href="javascript:void(0)"><i class="me-2" data-feather="printer"></i>Print</a>
+                        </div>
+                        <div class="card-body p-0">
+                          <div class="taskadd">
+                            <div class="table-responsive" style="padding:20px">
+                              <table class="display" id="advance-1">
+                                <thead>
+                                  <tr>
+                                    <th>Project</th>
+                                    <th>Task</th>
+                                    <th>Status</th>
+                                    <th>Due</th>
+                                    <th>Start work</th>
+                                    <th>End work</th>
+                                    <th>Data entry</th>
+                                    <th>Complete %</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for issues in task_issues %}
+                                  <tr>
+                                    <td>{{issues.project.name}}</td>
+                                    {% if issues.task %}
+                                      <td>{{issues.task.name}}</td>
+                                    {% else %}
+                                      <td>-----</td>
+                                    {% endif %}
+                                    <td>{{issues.status}}</td>
+                                    <td>{{issues.due}}</td>
+                                    <td>{{issues.today_start_work}}</td>
+                                    <td>{{issues.today_end_work}}</td>
+                                    <td>{{issues.total_data_entry_today}}</td>
+                                    <td>{{issues.complete_per}}%</td>
+                                  </tr>
+                                {% endfor %} 
+
+                                </tbody>
+                                
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid Ends-->
+  </div>
+</div>
+
+{% endblock body %}
+    

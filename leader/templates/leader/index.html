@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% block title %}{{request.user.profile.full_name}}'s dashboard{% endblock title %}
+{% block body %}
+<div class="page-body-wrapper">
+        
+  {% include 'sidebar.html' %}
+  
+  <div class="page-body">
+    <div class="container-fluid">        
+      <div class="page-title">
+        <div class="row">
+
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid default-dash">
+      <div class="row"> 
+        <div class="col-xl-6 col-md-6 dash-xl-50">
+          <div class="card profile-greeting">
+            <div class="card-body">
+              <div class="media">
+                <div class="media-body"> 
+                  <div class="greeting-user">
+                    <h1>Hello, {{request.user.profile.full_name}}</h1>
+                    <p>Welcome back, your dashboard is ready!</p><a class="btn btn-outline-white_color" href="{% url 'leader:leader_project_add' %}">Get Started<i class="icon-arrow-right">                           </i></a>
+                  </div>
+                </div>
+              </div>
+              <div class="cartoon-img"><img class="img-fluid" src="/static/assets/images/images.svg" alt=""></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6 dash-xl-50">
+          <div class="card pb-0 o-hidden earning-card">
+            <div class="card-header earning-back"></div>
+            <div class="card-body p-0">
+              <div class="earning-content"><img class="img-fluid" src="/static/assets/images/avatar.jpg" alt=""><a href="blog-single.html">
+                  <h4>Today's Earning</h4></a><span>(Mon 15 - Sun 21)</span>
+                <h6>$573.67</h6>
+                <div id="earning-chart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 dash-35 dash-xl-50">
+          <div class="card ongoing-project">
+            <div class="card-header card-no-border">
+              <div class="media media-dashboard">
+                <div class="media-body"> 
+                  <h5 class="mb-0">Ongoing Projects         </h5>
+                </div>
+                <div class="icon-box onhover-dropdown"><i data-feather="more-horizontal"></i>
+                  <div class="icon-box-show onhover-show-div">
+                    <ul> 
+                      <li> <a>
+                           Done</a></li>
+                      <li> <a>
+                           Pending</a></li>
+                      <li> <a>
+                           Rejected</a></li>
+                      <li> <a>In Progress</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body pt-0">
+              <div class="table-responsive custom-scrollbar">
+                <table class="table table-bordernone">
+                  <thead> 
+                    <tr> 
+                      <th> <span>Category </span></th>
+                      <th> <span>Project</span></th>
+                      <th> <span>Leader </span></th>
+                      <th> <span>Client Budget </span></th>
+                      <th> <span>Start Date </span></th>
+                      <th> <span>End Date </span></th>
+                      <th> <span>Status </span></th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    
+                    {% for project in ongoing_projects %}
+                      <tr>
+                        <td>
+                          <div class="media">
+                            <div class="media-body ps-2">
+                              <div class="avatar-details">
+                                <a href="product-page.html">
+                                  <h6>{{project.category}}</h6>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="img-content-box">
+                          <h6>{{project.name}}</h6>
+                        </td>
+                        <td>
+                          <h6>{{project.leader}}</h6>
+                        </td>
+                        <td>
+                          <h6>{{project.project_client_budget}}</h6>
+                        </td>
+                        <td>
+                          <h6>{{project.work_start_date}}</h6>
+                        </td>
+                        <td>
+                          <h6>{{project.work_end_date}}</h6>
+                        </td>
+                        <td>
+                          <div class="badge badge-light-info">{{project.status}}</div>
+                        </td>
+                      </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-md-6 dash-31 dash-xl-50">
+          <div class="card recent-activity">
+            <div class="card-header card-no-border">
+              <div class="media media-dashboard">
+                <div class="media-body"> 
+                  <h5 class="mb-0">Recent Activity      </h5>
+                </div>
+                <div class="icon-box onhover-dropdown"><i data-feather="more-horizontal"></i>
+                  <div class="icon-box-show onhover-show-div">
+                    <ul> 
+                      <li> <a>
+                           Latest </a></li>
+                      <li> <a>
+                           Earlist</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body pt-0">                  
+              <div class="table-responsive custom-scrollbar">        
+                <table class="table table-bordernone">                          
+                  <tbody> 
+                    <tr>
+                      <td>                          
+                        <div class="media">
+                          <div class="square-box me-2"><img class="img-fluid b-r-5" src="../assets/images/avtar/teacher.png" alt=""></div>
+                          <div class="media-body"><a href="user-profile.html">
+                              <h5>Alana Brady added new event</h5></a>
+                            <p class="font-primary">Sunday Cooking Class</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td><span class="badge badge-light-theme-light font-theme-light">2 hours ago   </span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="media">
+                          <div class="square-box me-2"><img class="img-fluid b-r-5" src="../assets/images/avtar/teenager.png" alt=""></div>
+                          <div class="media-body"><a href="user-profile.html">
+                              <h5>Lena Burton added new</h5></a>
+                            <p>Comment on <span class="font-primary">Vegetarian food fest</span></p>
+                            <div class="activity-msg"> <span class="activity-msg-box">
+                                 Again this was our mistake, we are truly sorry for not adhering to a strictly non animal product event.</span></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>   <span class="badge badge-light-theme-light font-theme-light">10 jul 2020</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="media">
+                          <div class="square-box me-2"><img class="img-fluid b-r-5" src="../assets/images/avtar/chinese.png" alt=""></div>
+                          <div class="media-body image-swipe"><a href="user-profile.html">
+                              <h5>Max Simmons attached 2</h5></a>
+                            <p>photos to <span class="font-primary">Food photography Class</span></p>
+                            <div class="my-gallery" itemscope="">
+                              <div class="row gallery">
+                                <figure class="inner-img ms-3" itemprop="associatedMedia" itemscope=""><a href="../assets/images/dashboard/img-26.png" itemprop="contentUrl" data-size="600x600"><img class="img-fluid" src="../assets/images/dashboard/img-26.png" itemprop="thumbnail" alt="Image description"></a>
+                                  <figcaption itemprop="caption description">Photos 1</figcaption>
+                                </figure>
+                                <figure class="inner-img ms-3" itemprop="associatedMedia" itemscope=""><a href="../assets/images/dashboard/image-20.jpg" itemprop="contentUrl" data-size="600x600"><img class="img-fluid" src="../assets/images/dashboard/image-20.jpg" itemprop="thumbnail" alt="Image description"></a>
+                                  <figcaption itemprop="caption description">Photos 2
+                                    <td> <span class="badge badge-light-theme-light font-theme-light">22 Jun 2020</span></td>
+                                  </figcaption>
+                                </figure>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-12 dash-xl-100">
+          <div class="card total-transactions">
+            <div class="row m-0">
+              <div class="col-md-6 col-sm-6 p-0">
+                <div class="card-header card-no-border">
+                  <h5>Total Transactions</h5>
+                </div>
+                <div class="card-body pt-0">
+                  <div> 
+                    <div id="transaction-chart"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 p-0 report-sec">
+                <div class="card-header card-no-border"> 
+                  <div class="header-top">
+                    <h5 class="m-0">Report</h5>
+                    <div class="icon-box onhover-dropdown"><i data-feather="more-horizontal"></i>
+                      <div class="icon-box-show onhover-show-div">
+                        <ul> 
+                          <li> <a>
+                               Today</a></li>
+                          <li> <a>
+                               Yesterday</a></li>
+                          <li> <a>
+                               Tommorow</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body pt-0">
+                  <div class="row"> 
+                    <div class="col-6 report-main">
+                      <div class="report-content text-center"> 
+                        <p class="font-theme-light">This Week</p>
+                        <h5>+86.53%</h5>
+                        <div class="progress progress-round-primary">
+                          <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="report-content text-center"> 
+                        <p class="font-theme-light">Last Week</p>
+                        <h5>-34.50%</h5>
+                        <div class="progress progress-round-secondary">
+                          <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">        
+                      <div class="media report-perfom">
+                        <div class="media-body">
+                          <p class="font-theme-light">Performance </p>
+                          <h5 class="m-0">+93.82%</h5>
+                        </div><a class="btn btn-primary" href="blog-single.html">New Report</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-md-6 dash-xl-50">
+          <div class="card yearly-chart">
+            <div class="card-header card-no-border pb-0">
+              <h5 class="pb-2">$3,500,000</h5>
+              <h6 class="font-theme-light f-14 m-0">November 2021</h6>
+            </div>
+            <div class="card-body pt-0">
+              <div> 
+                <div id="yearly-chart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Container-fluid Ends-->
+  </div>
+  
+{% endblock body %}
+    
+    

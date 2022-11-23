@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% block title %}Add New Projects{% endblock title %}
+{% block body %}
+<!-- Page Body Start-->
+<div class="page-body-wrapper default-menu default-menu">
+  <!-- Page Sidebar Start-->
+
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>
+               Project Create</h3>
+          </div>
+
+          <div class="col-12 col-sm-6">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">                                       <i data-feather="home"></i></a></li>
+              <li class="breadcrumb-item">Apps</li>
+              <li class="breadcrumb-item active">Project Create                           </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <form method='POST' enctype='multipart/form-data'>
+                {% csrf_token %}
+
+                <div class="form theme-form projectcreate">
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label>Project Title</label>
+                        {{form.name}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="mb-3">
+                        <label>Category</label>
+                        {{form.category}}
+                      </div>
+                    </div>
+                  </div>
+
+                  
+  
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="mb-3">
+                        <label>Workers</label>
+                        {{form.worker}}
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="mb-3">
+                        <label>Project Status</label>
+                        {{form.status}}
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="mb-3">
+                        <label>Starting date</label>
+                        {{form.work_start_date}}
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="mb-3">
+                        <label>Ending date</label>
+                        {{form.work_end_date}}
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="mb-3">
+                        <label>Deadline date</label>
+                        {{form.deadline}}
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="mb-3">
+                        <label>Client Budget</label>
+                        {{form.project_client_budget}}
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="mb-3">
+                        <label>Eastemate Cost</label>
+                        {{form.project_eastemate_cost}}
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label>Enter sort description</label>
+                        {{form.sort_description}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label>Project Description</label>
+                        {{form.description}}
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-3">
+                        <label>Upload project file</label>
+                        {{form.file}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-end"><button type='submit' class="btn btn-secondary me-3">Payment Workers</button><a class="btn btn-danger" href="{% url 'leader:leader_project' %}">Cancel</a></div>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid Ends-->
+
+
+
+  </div>
+</div>
+{% endblock body %}
+    

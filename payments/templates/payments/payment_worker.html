@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Payments To Workers{% endblock title %}
+{% block body %}
+<!-- Page Body Start-->
+<div class="page-body-wrapper default-menu default-menu">
+  <!-- Page Sidebar Start-->
+
+  {% include 'sidebar.html' %}
+
+  <!-- Page Sidebar Ends-->
+  <div class="page-body">
+    <div class="container-fluid">
+      <div class="page-title">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <h3>
+               Payment to workers</h3>
+          </div>
+
+          <div class="col-12 col-sm-6">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'leader:leader_dashboard' %}">                                       <i data-feather="home"></i></a></li>
+              <li class="breadcrumb-item">Payment</li>
+              <li class="breadcrumb-item active">Workers                           </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <form method='POST' enctype='multipart/form-data'>
+                {% csrf_token %}
+
+                <div class="form theme-form projectcreate">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <label>Project On</label>
+                        {{form.project}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="mb-3">
+                        <label>Pay for full project</label>
+                        {{form.amount}}
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="mb-3">
+                        <label>Pay per entry</label>
+                        {{form.per_entry}}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="mb-3">
+                        <label>Workers</label>
+                        {{form.receivers}}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-end"><button type='submit' class="btn btn-secondary me-3">Submit Payments</button><a class="btn btn-danger" href="{% url 'leader:leader_project' %}">Cancel</a></div>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Container-fluid Ends-->
+
+
+
+  </div>
+</div>
+{% endblock body %}
+    
