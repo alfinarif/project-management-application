@@ -5,7 +5,7 @@ services:
     volumes:
       - .:/pms_app
     ports:
-      - 8080:8000
+      - 80:8000
     image: app:pms_app
     container_name: pms_app_container
     command: python manage.py runserver 0.0.0.0:8000
