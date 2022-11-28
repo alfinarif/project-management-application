@@ -1,9 +1,10 @@
 from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS')
 
 
 # Application definition
