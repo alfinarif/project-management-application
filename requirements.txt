@@ -11,4 +11,4 @@ Pillow==9.2.0
 psycopg2==2.9.5
 pycparser==2.21
 PyJWT==2.4.0
-python-decouple==3.5
+python-decouple
