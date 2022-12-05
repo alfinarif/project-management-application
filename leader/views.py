@@ -40,7 +40,7 @@ class LeaderDashboardAPIView(TemplateView):
                         'tasks_count': tasks_count,
                         'submission_task_count': submission_task_count,
                         'ongoing_projects': ongoing_projects,
-                        
+                        'totals_balance': payment_worker_obj.totals_balance(request.user)
                     }
                     return render(request, 'leader/index.html', context)
                 else:
