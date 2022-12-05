@@ -105,3 +105,17 @@ class Payments(models.Model):
             return totals_earning + self.total_entry_amount(user)
         else:
             return 0
+
+    # leader totals balance
+    def totals_balance(self, user):
+        totals_balance_obj = Payments.objects.filter(Q(project__status='done') & Q(receivers=user) & Q(project__leader=user))
+        totals_project_prices = Project.objects.filter(Q(leader=user))
+        totals_balance = 0
+        for leader_payment in totals_balance_obj:
+            totals_balance += int(leader_payment.amount)
+        for project_price in totals_project_prices:
+            totals_balance += project_price.project_client_budget
+        
+        return totals_balance
+
+            

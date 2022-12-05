@@ -37,8 +37,12 @@
           <div class="card pb-0 o-hidden earning-card">
             <div class="card-header earning-back"></div>
             <div class="card-body p-0">
-              <div class="earning-content"><img class="img-fluid" src="/static/assets/images/avatar.jpg" alt=""><a href="blog-single.html">
-                  <h4>Totals Earnings</h4></a><span>(Mon 15 - Sun 21)</span>
+              {% if request.user.profile.employe_image %}
+                <div class="earning-content"><img class="img-fluid" style="width:53px;" src="{{request.user.profile.employe_image.url}}" alt=""><a href="blog-single.html">
+              {% else %}
+                <div class="earning-content"><img class="img-fluid" src="/static/assets/images/avatar.jpg" alt=""><a href="blog-single.html">
+              {% endif %}
+                <h4>Totals Balance</h4></a><span>(Mon 15 - Sun 21)</span>
                 <h6>$573.67</h6>
                 <div id="earning-chart"></div>
               </div>

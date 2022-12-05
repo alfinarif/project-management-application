@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from projects.models import Categories, Project, Task, Issues, ProjectSubmission
 from projects.forms import ProjectModelForm, TaskModelForm, ProjectSubmissionModelForm, IssuesModelForm
 from accounts.forms import RegisterForm, NotificationForm
+from payments.models import Payments
 
 User = get_user_model()
 
@@ -31,12 +32,15 @@ class LeaderDashboardAPIView(TemplateView):
                     # object filter area
                     ongoing_projects = Project.objects.filter(Q(leader=request.user) & Q(is_active = True)).order_by('-id')
 
+                    payment_worker_obj = Payments.objects.filter(project__leader=request.user).first()
+ 
                     context = {
                         'worker_count': worker_count,
                         'projects_count': projects_count,
                         'tasks_count': tasks_count,
                         'submission_task_count': submission_task_count,
-                        'ongoing_projects': ongoing_projects
+                        'ongoing_projects': ongoing_projects,
+                        
                     }
                     return render(request, 'leader/index.html', context)
                 else:
