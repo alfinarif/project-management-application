@@ -9,6 +9,7 @@ from projects.models import Categories, Project, Task, Issues, ProjectSubmission
 from projects.forms import ProjectModelForm, TaskModelForm, ProjectSubmissionModelForm, IssuesModelForm
 from accounts.forms import RegisterForm, NotificationForm
 from payments.models import Payments
+import datetime
 
 User = get_user_model()
 
@@ -40,7 +41,8 @@ class LeaderDashboardAPIView(TemplateView):
                         'tasks_count': tasks_count,
                         'submission_task_count': submission_task_count,
                         'ongoing_projects': ongoing_projects,
-                        'totals_balance': payment_worker_obj.totals_balance(request.user)
+                        'totals_balance': payment_worker_obj.totals_balance(request.user),
+                        'date': datetime.date.today()
                     }
                     return render(request, 'leader/index.html', context)
                 else:
